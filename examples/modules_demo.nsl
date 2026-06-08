@@ -1,0 +1,46 @@
+// NSL Modules Demo
+// Demonstrates module system: use, from … use, export, aliases.
+
+program ModulesDemo
+
+// Standard module imports
+use io
+use math
+use bits
+use mem
+
+// Aliased import
+use io as output
+
+// From-import with alias
+from math use sqrt as root
+
+// ── Exported types and functions ──────────────────────────────────────────
+
+export Player
+
+type Player
+    let name: string
+    let level: int
+end
+
+// ── Main ─────────────────────────────────────────────────────────────────
+
+fn main() -> int
+
+    // Direct module call
+    io.print("Modules demo")
+
+    // Aliased module call
+    output.print("Using aliased module")
+
+    // Arithmetic via math module
+    let sum: int = math.add(10, 20)
+    let diff: int = math.sub(20, 10)
+
+    // Bit operations
+    let shifted: int = bits.shift_left(1, 8)
+
+    return 0
+
+end

@@ -1,0 +1,16 @@
+// Hello World in NSL
+// The simplest NSL program.
+
+program Greeting
+
+use io
+
+fn main() -> int
+
+    let greeting: string = "Hello, World!"
+
+    io.print(greeting)
+
+    return 0
+
+end
