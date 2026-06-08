@@ -1,0 +1,113 @@
+// NSL Language Features Demo
+// Demonstrates types, functions, control flow, pattern matching, and loops.
+
+program Features
+
+use io
+use math
+
+// ── User-Defined Types ──────────────────────────────────────────────────
+
+type Vector2
+    let x: float
+    let y: float
+end
+
+type Player
+    let name: string
+    let health: int
+    let score: int
+end
+
+// ── Constants ────────────────────────────────────────────────────────────
+
+const MAX_HEALTH: int = 100
+const MIN_SCORE: int = 0
+
+// ── Functions ────────────────────────────────────────────────────────────
+
+fn make_player(name: string) -> Player
+    let p: Player = Player()
+    return p
+end
+
+fn is_alive(health: int) -> bool
+    if health > 0
+        return true
+    else
+        return false
+    end
+end
+
+fn describe_health(health: int) -> string
+    match health
+        case 100
+            return "Full health"
+        case 0
+            return "Dead"
+        default
+            return "Damaged"
+    end
+end
+
+fn add_scores(a: int, b: int) -> int
+    return a + b
+end
+
+// ── Main ─────────────────────────────────────────────────────────────────
+
+fn main() -> int
+
+    // Variable declarations with type inference
+    let x = 10
+    let y = 20
+    let total = add_scores(x, y)
+
+    io.print("Features demo running.")
+
+    // Arithmetic
+    let sum: int = x + y
+    let diff: int = y - x
+    let product: int = x * y
+
+    // Conditionals
+    if is_alive(MAX_HEALTH)
+        io.print("Player is alive.")
+    end
+
+    // While loop
+    let counter: int = 0
+    while counter < 5
+        set counter = counter + 1
+    end
+
+    // For loop (conceptual – iterates array elements)
+    // for item in items
+    //     io.print(item)
+    // end
+
+    // Infinite loop with break
+    let running: bool = true
+    loop
+        if not running
+            break
+        end
+        set running = false
+    end
+
+    // Error handling
+    try
+        // Simulate a risky operation
+        let result: int = total * 2
+    catch
+        io.print("An error occurred.")
+    end
+
+    // Ownership operations
+    let score: int = 42
+    let score_copy = copy score
+    let score_moved = move score
+
+    return 0
+
+end

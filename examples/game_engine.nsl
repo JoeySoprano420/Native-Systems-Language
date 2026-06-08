@@ -1,0 +1,87 @@
+// NSL Game Engine Demo
+// Demonstrates data-oriented design, arena memory, ECS-style patterns.
+
+program GameEngine
+
+use io
+use math
+
+// ── Component Types ───────────────────────────────────────────────────────
+
+type Position
+    let x: float
+    let y: float
+    let z: float
+end
+
+type Velocity
+    let x: float
+    let y: float
+    let z: float
+end
+
+type Health
+    let current: int
+    let max: int
+end
+
+type Entity
+    let id: int
+    let active: bool
+end
+
+// ── Systems ───────────────────────────────────────────────────────────────
+
+// Movement system: update positions based on velocity
+fn apply_velocity(pos: ref<Position>, vel: ref<Velocity>, dt: float) -> void
+    set pos.x = pos.x + vel.x * dt
+    set pos.y = pos.y + vel.y * dt
+    set pos.z = pos.z + vel.z * dt
+end
+
+// Health system: check if entity is alive
+fn is_alive(health: ref<Health>) -> bool
+    return health.current > 0
+end
+
+// Damage system: apply damage
+fn take_damage(health: ref<Health>, amount: int) -> void
+    let new_health: int = health.current - amount
+    if new_health < 0
+        set health.current = 0
+    else
+        set health.current = new_health
+    end
+end
+
+// ── Arena-based level manager ─────────────────────────────────────────────
+
+fn run_level() -> int
+
+    // All level entities live in a single arena – bulk cleanup on exit
+    let player_entity: Entity in arena LevelArena = Entity()
+    let enemy_entity: Entity  in arena LevelArena = Entity()
+
+    io.print("Level started.")
+    io.print("Entities allocated in arena.")
+
+    // Simulate game tick
+    let tick: int = 0
+    while tick < 10
+        set tick = tick + 1
+    end
+
+    io.print("Level complete. Arena memory released.")
+
+    return 0
+end
+
+// ── Entry Point ───────────────────────────────────────────────────────────
+
+fn main() -> int
+    io.print("NSL Game Engine Demo")
+    io.print("Starting level...")
+    let result: int = run_level()
+    io.print("Done.")
+    return result
+end

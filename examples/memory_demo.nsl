@@ -1,0 +1,29 @@
+// NSL Memory Regions Demo
+// Demonstrates stack, heap, arena, and zone memory allocations.
+
+program MemoryDemo
+
+use io
+
+fn main() -> int
+
+    // Stack allocation – destroyed automatically when scope exits
+    let temp: Buffer in stack = Buffer(256)
+
+    // Heap allocation – long-lived, requires explicit free
+    let player: ptr<Player> in heap = new Player()
+
+    // Arena allocation – grouped lifetime, ideal for game levels
+    let enemy: Entity in arena LevelArena = Entity()
+
+    // Zone allocation – protected virtual memory region
+    let data: Packet in zone SecureZone = Packet()
+
+    io.print("Memory regions allocated successfully.")
+
+    // Release heap allocation
+    free player
+
+    return 0
+
+end

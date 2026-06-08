@@ -1,0 +1,44 @@
+// NSL Async/Await Demo
+// Demonstrates asynchronous programming in NSL.
+
+program AsyncDemo
+
+use io
+use net
+
+// ── Simulated async operations ────────────────────────────────────────────
+
+async fn fetch_data(url: string) -> string
+    // Simulated async HTTP fetch
+    let result: string = "response_data"
+    return result
+end
+
+async fn process(data: string) -> int
+    // Process the fetched data asynchronously
+    let length: int = 42   // simulated processing
+    return length
+end
+
+// ── Async main ────────────────────────────────────────────────────────────
+
+async fn run() -> int
+
+    io.print("Starting async operations...")
+
+    let data: string = await fetch_data("https://api.example.com/data")
+
+    let result: int = await process(data)
+
+    io.print("Async operations complete.")
+
+    return 0
+
+end
+
+fn main() -> int
+    // In NSL, the runtime drives the async scheduler.
+    // The sync entry point launches the async runtime.
+    io.print("NSL Async Demo")
+    return 0
+end
